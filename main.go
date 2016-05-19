@@ -1,8 +1,8 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 )
 
 func main() {
@@ -11,7 +11,6 @@ func main() {
 		help(args)
 	} else {
 		action := args[1]
-		fmt.Println(action)
 		switch action {
 		case "timestr":
 			if checkargs(3, args) {
@@ -45,6 +44,10 @@ func main() {
 			if checkargs(3, args) {
 				urldecode(args[2])
 			}
+		case "ip":
+			if checkargs(3, args) {
+				ip(args[2])
+			}
 		default:
 			help(args)
 		}
@@ -52,7 +55,7 @@ func main() {
 }
 
 func help(args []string) {
-	fmt.Println("run: ",args[0]," command args")
+	fmt.Println("run: ", args[0], " command args")
 	fmt.Println(`
 commands:
 	timestr timestamp      parse timestamp to string
@@ -63,6 +66,7 @@ commands:
 	base64decode string    get base64 decode
 	urlencode string       get urlencode
 	urldecode string       get urldecode
+	ip 0.0.0.0             get location for ip address
 `)
 }
 
