@@ -6,6 +6,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/astaxie/beego/httplib"
 	"github.com/cosiner/gohper/regexp"
+	"github.com/toqueteos/webbrowser"
 	"strings"
 )
 
@@ -65,6 +66,7 @@ func ipip(ipaddr string) {
 							fmt.Println(err)
 						} else {
 							fmt.Println(string(bytes))
+							view(timezone.Latitude, timezone.Longitude, ipaddr)
 						}
 					}
 				}
@@ -118,5 +120,12 @@ func ipip_sub(site, ipaddr string) {
 				}
 			}
 		}
+	}
+}
+
+func view(lat, log float64, ip string) {
+	if lat > 0 && log > 0 {
+		url := fmt.Sprintf("http://api.map.baidu.com/geocoder?location=%v,%v&coord_type=gcj02&output=html&src=%v", lat, log, ip)
+		webbrowser.Open(url)
 	}
 }
