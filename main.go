@@ -12,9 +12,13 @@ func main() {
 	} else {
 		action := args[1]
 		switch action {
-		case "timestr":
+		case "fromtime":
 			if checkargs(3, args) {
 				parseunixtime(args[2])
+			}
+		case "totime":
+			if checkargs(3, args) {
+				tounixtime(args[2])
 			}
 		case "unixtime":
 			if checkargs(2, args) {
@@ -58,7 +62,8 @@ func help(args []string) {
 	fmt.Println("run: ", args[0], " command args")
 	fmt.Println(`
 commands:
-	timestr timestamp      parse timestamp to string
+	fromtime timestamp     parse timestamp to string
+	totime timestring      parse time string to timestamp
 	unixtime               get current unix timestamp
 	unixnano               get current unix nano timestamp
 	md5 string             get md5

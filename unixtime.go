@@ -7,6 +7,15 @@ import (
 	"time"
 )
 
+func tounixtime(timestr string) {
+	unixtime, err := gotime.StrToTime(timestr, gotime.FORMAT_YYYY_MM_DD_HH_II_SS)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(unixtime)
+	}
+}
+
 func parseunixtime(timestamp string) {
 	unixtimestamp, err := strconv.Atoi(timestamp)
 	if err != nil {
