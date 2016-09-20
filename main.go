@@ -52,6 +52,10 @@ func main() {
 			if checkargs(3, args) {
 				ip(args[2])
 			}
+		case "htpasswd":
+			if checkargs(4, args) {
+				htpasswd(args[2], args[3])
+			}
 		default:
 			help(args)
 		}
@@ -62,16 +66,17 @@ func help(args []string) {
 	fmt.Println("run: ", args[0], " command args")
 	fmt.Println(`
 commands:
-	fromtime timestamp     parse timestamp to string
-	totime timestring      parse time string to timestamp
-	unixtime               get current unix timestamp
-	unixnano               get current unix nano timestamp
-	md5 string             get md5
-	base64encode string    get base64 ecnode
-	base64decode string    get base64 decode
-	urlencode string       get urlencode
-	urldecode string       get urldecode
-	ip 0.0.0.0             get location for ip address
+	fromtime timestamp            parse timestamp to string
+	totime timestring             parse time string to timestamp
+	unixtime                      get current unix timestamp
+	unixnano                      get current unix nano timestamp
+	md5 string                    get md5
+	base64encode string           get base64 ecnode
+	base64decode string           get base64 decode
+	urlencode string              get urlencode
+	urldecode string              get urldecode
+	ip 0.0.0.0                    get location for ip address
+	htpasswd username password    generate http basic auth like htpasswd
 `)
 }
 

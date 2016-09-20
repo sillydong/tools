@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha1"
 	"fmt"
 	"github.com/sillydong/goczd/godata"
 )
@@ -33,4 +34,11 @@ func urldecode(str string) {
 	} else {
 		fmt.Println(result)
 	}
+}
+
+func htpasswd(username, password string) {
+	hasher := sha1.New()
+	hasher.Write([]byte(password))
+	result := godata.Base64Encode(hasher.Sum(nil))
+	fmt.Printf("%s:{SHA}%s\n", username, result)
 }
