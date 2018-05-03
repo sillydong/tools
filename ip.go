@@ -14,6 +14,7 @@ func init() {
 		cli.Command{
 			Name:   "myip",
 			Usage:  "show my ip address",
+			ArgsUsage:" ",
 			Action: myip,
 		},
 		// cli.Command{

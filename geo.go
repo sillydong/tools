@@ -9,20 +9,25 @@ import (
 
 func init() {
 	commands = append(commands, cli.Command{
-		Name:  "geotrans",
+		Name:  "geo",
 		Usage: "transform geo locations",
+		ArgsUsage: " ",
 		Flags: []cli.Flag{
 			cli.Float64Flag{Name: "lng", Usage: "longitude"},
 			cli.Float64Flag{Name: "lat", Usage: "latitude"},
 		},
-		Action: trans,
+		Action: geo,
 	})
 }
 
-func trans(ctx *cli.Context) {
+func geo(ctx *cli.Context) {
+	if ctx.NumFlags() !=2 {
+		cli.ShowCommandHelpAndExit(ctx,"geo",1)
+	}
+
 	lng := ctx.Float64("lng")
 	lat := ctx.Float64("lat")
-	fmt.Println("WGS84坐标系：即地球坐标系，国际上通用的坐标系。\nGCJ02坐标系：即火星坐标系，WGS84坐标系经加密后的坐标系。Google Maps，高德在用。\nBD09坐标系：即百度坐标系，GCJ02坐标系经加密后的坐标系。\n")
+	fmt.Println("WGS84坐标系：即地球坐标系，国际上通用的坐标系。\nGCJ02坐标系：即火星坐标系，WGS84坐标系经加密后的坐标系。Google Maps，高德在用。\nBD09坐标系：即百度坐标系，GCJ02坐标系经加密后的坐标系。")
 
 	fmt.Println("BD09toGCJ02:")
 	fmt.Println(BD09toGCJ02(lng, lat))

@@ -89,7 +89,7 @@ func md5encode(ctx *cli.Context) {
 		cli.ShowCommandHelp(ctx, "md5")
 	} else {
 		if ctx.Bool("f") {
-			//filename
+			// filename
 			f, err := os.Open(ctx.Args()[0])
 			defer f.Close()
 			if err != nil {
@@ -116,7 +116,7 @@ func crc32encode(ctx *cli.Context) {
 	} else {
 		crc32q := crc32.MakeTable(0xD5828281)
 		if ctx.Bool("f") {
-			//filename
+			// filename
 			body, err := ioutil.ReadFile(ctx.Args()[0])
 			if err != nil {
 				fmt.Println(err)
@@ -135,7 +135,7 @@ func sha1encode(ctx *cli.Context) {
 		cli.ShowCommandHelp(ctx, "sha1")
 	} else {
 		if ctx.Bool("f") {
-			//filename
+			// filename
 			f, err := os.Open(ctx.Args()[0])
 			defer f.Close()
 			if err != nil {
@@ -157,18 +157,21 @@ func sha1encode(ctx *cli.Context) {
 }
 
 func base64encode(ctx *cli.Context) {
-	strs := ctx.Args()
-	if len(strs) > 0 {
-		for _, str := range strs {
+	if ctx.NArg() < 1 {
+		cli.ShowCommandHelp(ctx, "encode")
+	} else {
+		for _, str := range ctx.Args() {
 			fmt.Printf("%s : %s\n", str, base64.StdEncoding.EncodeToString([]byte(str)))
+
 		}
 	}
 }
 
 func base64decode(ctx *cli.Context) {
-	strs := ctx.Args()
-	if len(strs) > 0 {
-		for _, str := range strs {
+	if ctx.NArg() < 1 {
+		cli.ShowCommandHelp(ctx, "decode")
+	} else {
+		for _, str := range ctx.Args() {
 			dstr, err := base64.StdEncoding.DecodeString(str)
 			if err != nil {
 				fmt.Printf("%s : %v\n", str, err)
@@ -180,18 +183,20 @@ func base64decode(ctx *cli.Context) {
 }
 
 func urlencode(ctx *cli.Context) {
-	us := ctx.Args()
-	if len(us) > 0 {
-		for _, u := range us {
+	if ctx.NArg() < 1 {
+		cli.ShowCommandHelp(ctx, "encode")
+	} else {
+		for _, u := range ctx.Args() {
 			fmt.Printf("%s :\n\t%s\n", u, url.QueryEscape(u))
 		}
 	}
 }
 
 func urldecode(ctx *cli.Context) {
-	us := ctx.Args()
-	if len(us) > 0 {
-		for _, u := range us {
+	if ctx.NArg() < 1 {
+		cli.ShowCommandHelp(ctx, "decode")
+	} else {
+		for _, u := range ctx.Args() {
 			ud, err := url.QueryUnescape(u)
 			if err != nil {
 				fmt.Printf("%s :\n\t%v\n", u, err)
@@ -203,10 +208,11 @@ func urldecode(ctx *cli.Context) {
 }
 
 func htpasswd(ctx *cli.Context) {
-	hasher := sha1.New()
-	passwords := ctx.Args()
-	if len(passwords) > 0 {
-		for _, pass := range passwords {
+	if ctx.NArg() < 1 {
+		cli.ShowCommandHelp(ctx, "htpasswd")
+	} else {
+		hasher := sha1.New()
+		for _, pass := range ctx.Args() {
 			_, err := hasher.Write([]byte(pass))
 			if err != nil {
 				fmt.Printf("%s : %v\n", pass, err)

@@ -15,6 +15,7 @@ func init() {
 			Name:    "current",
 			Aliases: []string{"c"},
 			Usage:   "return current timestamp",
+			ArgsUsage:" ",
 			Flags: []cli.Flag{
 				cli.BoolFlag{Name: "nano", Usage: "return nano seconds"},
 			},
@@ -43,6 +44,7 @@ func init() {
 				cli.Command{
 					Name:   "rule",
 					Usage:  "print go time fomat rule",
+					ArgsUsage:" ",
 					Action: rule,
 				},
 			},
