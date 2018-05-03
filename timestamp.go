@@ -12,18 +12,16 @@ import (
 func init() {
 	commands = append(commands,
 		cli.Command{
-			Name:    "current",
-			Aliases: []string{"c"},
-			Usage:   "return current timestamp",
-			ArgsUsage:" ",
+			Name:      "current",
+			Usage:     "return current timestamp",
+			ArgsUsage: " ",
 			Flags: []cli.Flag{
 				cli.BoolFlag{Name: "nano", Usage: "return nano seconds"},
 			},
 			Action: current,
 		}, cli.Command{
-			Name:    "format",
-			Aliases: []string{"f"},
-			Usage:   "format time",
+			Name:  "format",
+			Usage: "format time",
 			Subcommands: []cli.Command{
 				cli.Command{
 					Name:  "from",
@@ -42,10 +40,10 @@ func init() {
 					Action: to,
 				},
 				cli.Command{
-					Name:   "rule",
-					Usage:  "print go time fomat rule",
-					ArgsUsage:" ",
-					Action: rule,
+					Name:      "rule",
+					Usage:     "print go time fomat rule",
+					ArgsUsage: " ",
+					Action:    rule,
 				},
 			},
 		})
