@@ -12,6 +12,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func init() {
@@ -211,15 +212,27 @@ func htpasswd(ctx *cli.Context) {
 	if ctx.NArg() < 1 {
 		cli.ShowCommandHelp(ctx, "htpasswd")
 	} else {
-		hasher := sha1.New()
 		for _, pass := range ctx.Args() {
-			_, err := hasher.Write([]byte(pass))
-			if err != nil {
-				fmt.Printf("%s : %v\n", pass, err)
-			} else {
-				fmt.Printf("%s : {SHA}%s\n", pass, base64.StdEncoding.EncodeToString(hasher.Sum(nil)))
-				hasher.Reset()
-			}
+			sha := hashSha(pass)
+			fmt.Printf("sha : {SHA}%s\n", sha)
+			bcrypt := hashBcrypt(pass)
+			fmt.Printf("bcrypt : %s\n", bcrypt)
+
 		}
 	}
+}
+
+func hashSha(password string) string {
+	s := sha1.New()
+	s.Write([]byte(password))
+	passwordSum := []byte(s.Sum(nil))
+	return base64.StdEncoding.EncodeToString(passwordSum)
+}
+
+func hashBcrypt(password string) (hash string) {
+	passwordBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return ""
+	}
+	return string(passwordBytes)
 }
